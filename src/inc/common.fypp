@@ -1,0 +1,41 @@
+#:mute
+
+#! number of bits of integer type
+#:set INTEGER_BITS = [8, 16, 32, 64]
+
+#! number of bytes of integer type
+#:set INTEGER_BYTES = [1, 2, 4 , 8]
+
+#! integer kinds
+#:set INTEGER_KINDS = ["int{}".format(bits) for bits in INTEGER_BITS]
+
+#! integer types
+#:set INTEGER_TYPES = ["integer({})".format(kind) for kind in INTEGER_KINDS]
+
+#! nubmer of bits of real type
+#:set REAL_BITS = [32, 64]
+
+#! nubmer of bytes of real type
+#:set REAL_BYTES = [4, 8]
+
+#! real kinds
+#:set REAL_KINDS = ["real{}".format(bits) for bits in REAL_BITS]
+
+#! real types
+#:set REAL_TYPES = ["real({})".format(kind) for kind in REAL_KINDS]
+
+#! integer and real types
+#:set IR_TYPES = INTEGER_TYPES + REAL_TYPES
+#:set IR_KINDS = INTEGER_KINDS + REAL_KINDS
+#:set IR_KINDS_TYPES = list(zip(IR_KINDS, IR_TYPES))
+
+#! 型の名前にrealが含まれていたら.0を返し，それ以外は何も返さない．
+#:def decimal_suffix(type)
+#{if 'real' in type}#.0#{endif}#
+#:enddef
+
+#! 配列のランクが1以上なら，ランクに応じた数のコロンを返す．
+#:def rank_suffix(rank)
+#{if rank > 0}#(${":" + ",:" * (rank - 1)}$)#{endif}#
+#:enddef
+#:endmute

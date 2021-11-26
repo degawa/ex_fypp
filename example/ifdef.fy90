@@ -1,0 +1,28 @@
+program ifdef
+    implicit none
+
+    #:if defined('DEBUG')
+        print *, "debug print"
+    #:else
+        print *,"release"
+    #:endif
+end program ifdef
+#:mute
+
+#! fypp ifdef.fy90 ifdef.f90 --define=DEBUG
+#! ↓
+#! program ifdef
+#!     implicit none
+#!
+#!         print *, "debug print"
+#! end program ifdef
+
+#! fypp ifdef.fy90 ifdef.f90
+#! ↓
+#! program ifdef
+#!     implicit none
+#!
+#!         print *,"release"
+#! end program ifdef
+
+#:endmute

@@ -1,0 +1,161 @@
+#:include "common.fypp"
+module mod_mean
+    use, intrinsic :: iso_fortran_env
+    implicit none
+    private
+    public :: mean
+
+    interface mean
+        #:for rank in range(1, 15+1)
+            procedure :: mean_r64_rank${rank}$
+        #:endfor
+    end interface
+
+contains
+    #:for rank in range(1, 15+1)
+        function mean_r64_rank${rank}$(x) result(res)
+            real(real64), intent(in) :: x${rank_suffix(rank)}$
+            real(real64) :: res
+
+            res = sum(x) / real(size(x, kind = int64), real64)
+
+        end function mean_r64_rank${rank}$
+    #:endfor
+end module mod_mean
+#:mute
+
+#! fypp mean.fy90 mean.f90 --include=inc
+#! ↓
+#! module mod_mean
+#!     use, intrinsic :: iso_fortran_env
+#!     implicit none
+#!     private
+#!     public :: mean
+#!
+#!     interface mean
+#!             procedure :: mean_r64_rank1
+#!             procedure :: mean_r64_rank2
+#!             procedure :: mean_r64_rank3
+#!             procedure :: mean_r64_rank4
+#!             procedure :: mean_r64_rank5
+#!             procedure :: mean_r64_rank6
+#!             procedure :: mean_r64_rank7
+#!             procedure :: mean_r64_rank8
+#!             procedure :: mean_r64_rank9
+#!             procedure :: mean_r64_rank10
+#!             procedure :: mean_r64_rank11
+#!             procedure :: mean_r64_rank12
+#!             procedure :: mean_r64_rank13
+#!             procedure :: mean_r64_rank14
+#!             procedure :: mean_r64_rank15
+#!     end interface
+#!
+#! contains
+#!         function mean_r64_rank1(x) result(res)
+#!             real(real64), intent(in) :: x(:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank1
+#!         function mean_r64_rank2(x) result(res)
+#!             real(real64), intent(in) :: x(:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank2
+#!         function mean_r64_rank3(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank3
+#!         function mean_r64_rank4(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank4
+#!         function mean_r64_rank5(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank5
+#!         function mean_r64_rank6(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:,:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank6
+#!         function mean_r64_rank7(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:,:,:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank7
+#!         function mean_r64_rank8(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:,:,:,:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank8
+#!         function mean_r64_rank9(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:,:,:,:,:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank9
+#!         function mean_r64_rank10(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:,:,:,:,:,:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank10
+#!         function mean_r64_rank11(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:,:,:,:,:,:,:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank11
+#!         function mean_r64_rank12(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:,:,:,:,:,:,:,:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank12
+#!         function mean_r64_rank13(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:,:,:,:,:,:,:,:,:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank13
+#!         function mean_r64_rank14(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:,:,:,:,:,:,:,:,:,:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank14
+#!         function mean_r64_rank15(x) result(res)
+#!             real(real64), intent(in) :: x(:,:,:,:,:,:,:,:,:,:,:,:,:,:,:)
+#!             real(real64) :: res
+#!
+#!             res = sum(x) / real(size(x, kind = int64), real64)
+#!
+#!         end function mean_r64_rank15
+#! end module mod_mean
+
+#:endmute

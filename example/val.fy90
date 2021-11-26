@@ -1,0 +1,47 @@
+program val
+    use, intrinsic :: iso_fortran_env
+    implicit none
+
+    #:if defined('NUM_GRID_POINTS') and NUM_GRID_POINTS > 0
+        integer(int32), parameter :: Nx = ${NUM_GRID_POINTS}$
+    #:else
+        integer(int32), parameter :: Nx = 100
+    #:endif
+    #:if defined('NUM_GRID_POINTS')
+        #:del NUM_GRID_POINTS
+    #:endif
+
+    print *, Nx
+
+    #:if defined('NUM_GRID_POINTS')
+        #! NUM_GRID_POINTSは削除されているので表示されない
+        print *, ${NUM_GRID_POINTS}$
+    #:endif
+end program val
+#:mute
+
+#! fypp val.fy90 val.f90 --define=NUM_GRID_POINTS=10
+#! ↓
+#! program val
+#!     use, intrinsic :: iso_fortran_env
+#!     implicit none
+#!
+#!         integer(int32), parameter :: Nx = 10
+#!
+#!     print *, Nx
+#!
+#! end program val
+
+#! fypp val.fy90 val.f90
+#! ↓
+#! program val
+#!     use, intrinsic :: iso_fortran_env
+#!     implicit none
+#!
+#!         integer(int32), parameter :: Nx = 100
+#!
+#!     print *, Nx
+#!
+#! end program val
+
+#:endmute

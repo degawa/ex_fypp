@@ -1,0 +1,109 @@
+#:include "common.fypp"
+module mod_is_positive
+    use, intrinsic :: iso_fortran_env
+    implicit none
+    private
+    public :: is_positive
+
+    interface is_positive
+        #:for k in IR_KINDS
+            procedure :: is_positive_${k}$
+        #:endfor
+    end interface
+
+contains
+    #:for k, t in IR_KINDS_TYPES
+
+        logical function is_positive_${k}$(val)
+            implicit none
+            ${t}$, intent(in) :: val
+
+            is_positive_${k}$ = .false.
+            if (val >= 0${decimal_suffix(t)}$_${k}$) then
+                is_positive_${k}$ = .true.
+            end if
+        end function is_positive_${k}$
+    #:endfor
+end module mod_is_positive
+#:mute
+
+#!fypp is_positive.fy90 is_positive.f90 --include=inc
+#!↓
+#!module mod_is_positive
+#!    use, intrinsic :: iso_fortran_env
+#!    implicit none
+#!    private
+#!    public :: is_positive
+#!
+#!    interface is_positive
+#!            procedure :: is_positive_int8
+#!            procedure :: is_positive_int16
+#!            procedure :: is_positive_int32
+#!            procedure :: is_positive_int64
+#!            procedure :: is_positive_real32
+#!            procedure :: is_positive_real64
+#!    end interface
+#!
+#!contains
+#!
+#!        logical function is_positive_int8 (val)
+#!            implicit none
+#!            integer(int8), intent(in) :: val
+#!
+#!            is_positive_int8 = .false.
+#!            if (val >= 0_int8) then
+#!                is_positive_int8 = .true.
+#!            end if
+#!        end function is_positive_int8
+#!
+#!        logical function is_positive_int16 (val)
+#!            implicit none
+#!            integer(int16), intent(in) :: val
+#!
+#!            is_positive_int16 = .false.
+#!            if (val >= 0_int16) then
+#!                is_positive_int16 = .true.
+#!            end if
+#!        end function is_positive_int16
+#!
+#!        logical function is_positive_int32 (val)
+#!            implicit none
+#!            integer(int32), intent(in) :: val
+#!
+#!            is_positive_int32 = .false.
+#!            if (val >= 0_int32) then
+#!                is_positive_int32 = .true.
+#!            end if
+#!        end function is_positive_int32
+#!
+#!        logical function is_positive_int64 (val)
+#!            implicit none
+#!            integer(int64), intent(in) :: val
+#!
+#!            is_positive_int64 = .false.
+#!            if (val >= 0_int64) then
+#!                is_positive_int64 = .true.
+#!            end if
+#!        end function is_positive_int64
+#!
+#!        logical function is_positive_real32 (val)
+#!            implicit none
+#!            real(real32), intent(in) :: val
+#!
+#!            is_positive_real32 = .false.
+#!            if (val >= 0.0_real32) then
+#!                is_positive_real32 = .true.
+#!            end if
+#!        end function is_positive_real32
+#!
+#!        logical function is_positive_real64 (val)
+#!            implicit none
+#!            real(real64), intent(in) :: val
+#!
+#!            is_positive_real64 = .false.
+#!            if (val >= 0.0_real64) then
+#!                is_positive_real64 = .true.
+#!            end if
+#!        end function is_positive_real64
+#!end module mod_is_positive
+#:endmute

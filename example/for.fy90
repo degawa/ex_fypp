@@ -1,0 +1,49 @@
+program for
+    use, intrinsic :: iso_fortran_env
+    implicit none
+
+    #! integer kinds
+    #:set INTEGER_KINDS = ['int8', 'int16', 'int32', 'int64']
+
+    #:for int_kind in INTEGER_KINDS
+        integer(${int_kind}$), parameter :: zero_${int_kind}$ = 0_${int_kind}$
+    #:endfor
+
+    block
+        character(5) :: int_kinds(4) = ["int8 ", "int16", "int32", "int64"]
+        integer(int32) :: c
+        character(:), allocatable :: int_kind
+
+        do c = 1, 4
+            int_kind = trim(int_kinds(c))
+            print *, "integer("//int_kind//"), parameter :: zero_"//int_kind//" = 0_"//int_kind
+        end do
+    end block
+end program for
+#:mute
+
+#! fypp for.fy90 for.f90
+#! ↓
+#! program for
+#!     use, intrinsic :: iso_fortran_env
+#!     implicit none
+#!
+#!
+#!         integer(int8), parameter :: zero_int8 = 0_int8
+#!         integer(int16), parameter :: zero_int16 = 0_int16
+#!         integer(int32), parameter :: zero_int32 = 0_int32
+#!         integer(int64), parameter :: zero_int64 = 0_int64
+#!
+#!     block
+#!         character(5) :: int_kinds(4) = ["int8 ", "int16", "int32", "int64"]
+#!         integer(int32) :: c
+#!         character(:), allocatable :: int_kind
+#!
+#!         do c = 1, 4
+#!             int_kind = trim(int_kinds(c))
+#!             print *, "integer("//int_kind//"), parameter :: zero_"//int_kind//" = 0_"//int_kind
+#!         end do
+#!     end block
+#! end program for
+
+#:endmute
