@@ -1,0 +1,12 @@
+name = "ex_fypp"
+version = "0.1.0"
+license = "MIT"
+author = "Tomohiro Degawa"
+copyright = "Copyright 2021, Tomohiro Degawa"
+description = "Examples of fypp"
+
+[build]
+auto-examples = true
+
+[install]
+library = false
